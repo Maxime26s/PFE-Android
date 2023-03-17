@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatInputView">
+        <attr name="floatLabel" format="string" />
+    </declare-styleable>
+    <declare-styleable name="StepperInputView">
+        <attr name="stepperLabel" format="string" />
+        <attr name="mapValues" format="string" />
+    </declare-styleable>
+</resources>
