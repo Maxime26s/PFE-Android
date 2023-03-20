@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_source"
-        android:name="com.example.pfemobile.ui.dashboard.DashboardFragment"
+        android:name="com.example.pfemobile.ui.source.SourceFragment"
         android:label="@string/title_source"
         tools:layout="@layout/fragment_source" />
 
     <fragment
         android:id="@+id/navigation_generator"
-        android:name="com.example.pfemobile.ui.notifications.NotificationsFragment"
+        android:name="com.example.pfemobile.ui.notifications.GeneratorFragment"
         android:label="@string/title_generator"
         tools:layout="@layout/fragment_generator" />
 </navigation>

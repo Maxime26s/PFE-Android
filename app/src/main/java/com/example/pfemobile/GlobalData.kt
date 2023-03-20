@@ -21,6 +21,13 @@ object GlobalData {
         )
     }
 
+    var bleConnected: Boolean = false
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("bleConnected", value)
+            }
+        }
 
     var chan1State: Boolean = false
         set(value) {
@@ -43,6 +50,7 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("timePerCell", value)
+                write("ECHO $value")
             }
         }
 
@@ -112,5 +120,10 @@ object GlobalData {
 
     private fun notifyListener(key: String, value: Any) {
         listeners[key]?.invoke(value)
+    }
+
+    private fun write(message: String){
+        if(::bleCommunicator.isInitialized)
+            bleCommunicator.write(message)
     }
 }

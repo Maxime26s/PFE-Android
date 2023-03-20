@@ -116,6 +116,8 @@ class BleCommunicator(private val context: Context, private val onMessageReceive
                     }
                 }
             })
+
+        GlobalData.bleConnected = true
     }
 
     fun write(message: String) {
@@ -135,5 +137,15 @@ class BleCommunicator(private val context: Context, private val onMessageReceive
         bluetoothGatt?.disconnect()
         bluetoothGatt?.close()
         bluetoothGatt = null
+
+        GlobalData.bleConnected = false
+    }
+
+    fun isConnected() : Boolean{
+        return bluetoothGatt != null
+    }
+
+    fun isScanning() : Boolean{
+        return scanning
     }
 }

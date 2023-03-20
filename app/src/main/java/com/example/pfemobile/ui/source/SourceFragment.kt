@@ -1,4 +1,4 @@
-package com.example.pfemobile.ui.dashboard
+package com.example.pfemobile.ui.source
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.pfemobile.GlobalData
 import com.example.pfemobile.databinding.FragmentSourceBinding
 
-class DashboardFragment : Fragment() {
+class SourceFragment : Fragment() {
 
     private var _binding: FragmentSourceBinding? = null
 
@@ -23,14 +23,14 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        val sourceViewModel =
+            ViewModelProvider(this).get(SourceViewModel::class.java)
 
         _binding = FragmentSourceBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
+        sourceViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 

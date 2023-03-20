@@ -34,6 +34,7 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
@@ -61,7 +62,7 @@
                     android:layout_marginTop="25dp"
                     android:layout_weight="0"
                     app:mapValues="0.1 μs:0.0000001|0.2 μs:0.0000002|0.5 μs:0.0000005|1 μs:0.000001|2 μs:0.000002|5 μs:0.000005|10 μs:0.00001|20 μs:0.00002|50 μs:0.00005|0.1 ms:0.0001|0.2 ms:0.0002|0.5 ms:0.0005|1 ms:0.001|2 ms:0.002|5 ms:0.005|10 ms:0.01|20 ms:0.02|50 ms:0.05|100 ms:0.1|200 ms:0.2"
-                    app:stepperLabel="Choose your value:" />
+                    app:stepperLabel="Base de temps :" />
 
                 <com.example.pfemobile.ui.StepperInputView
                     android:id="@+id/volt_stepper_input_view"
@@ -70,7 +71,16 @@
                     android:layout_marginTop="25dp"
                     android:layout_weight="0"
                     app:mapValues="1 mV:0.001|2 mV:0.002|5 mV:0.005|10 mV:0.01|20 mV:0.02|50 mV:0.05|0.1 V:0.1|0.2 V:0.2|0.5 V:0.5|1 V:1|2 V:2|5 V:5|10 V:10"
-                    app:stepperLabel="Choose your value:" />
+                    app:stepperLabel="Volt/Cell :" >
+
+                </com.example.pfemobile.ui.StepperInputView>
+
+                <Button
+                    android:id="@+id/connect_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="Connect" />
 
             </LinearLayout>
 
