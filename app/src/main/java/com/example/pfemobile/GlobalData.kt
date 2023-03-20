@@ -1,14 +1,24 @@
 package com.example.pfemobile
 
 import android.content.Context
+import android.util.Log
 
 object GlobalData {
+    private const val TAG = "GlobalData"
+
     private val listeners = mutableMapOf<String, (value: Any) -> Unit>()
 
-    lateinit var bleManager: BleManager
+    lateinit var bleCommunicator: BleCommunicator
 
     fun init(context: Context) {
-        bleManager = BleManager(context)
+        // Initialize the BleCommunicator
+        bleCommunicator = BleCommunicator(
+            context = context,
+            onMessageReceived = { message ->
+                // Handle the received message
+                Log.d(TAG, "Message received: $message")
+            }
+        )
     }
 
 

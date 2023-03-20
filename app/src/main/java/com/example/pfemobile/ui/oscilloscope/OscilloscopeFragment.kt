@@ -43,8 +43,6 @@ class OscilloscopeFragment : Fragment() {
         binding.timeStepperInputView.setIndexFromValue(0.1f)
         binding.voltStepperInputView.setIndexFromValue(1f)
 
-        //GlobalData.bleManager.startScanningForClosest()
-
         return root
     }
 
