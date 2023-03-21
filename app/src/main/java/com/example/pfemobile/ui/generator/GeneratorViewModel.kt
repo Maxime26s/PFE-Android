@@ -1,4 +1,4 @@
-package com.example.pfemobile.ui.notifications
+package com.example.pfemobile.ui.generator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -37,49 +37,90 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.example.pfemobile.ui.FloatInputView
-                    android:id="@+id/float_input_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_weight="0"
-                    app:floatLabel="Enter a float value:" />
-
                 <com.example.pfemobile.ui.StepperInputView
                     android:id="@+id/time_stepper_input_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginVertical="2.5dp"
                     android:layout_weight="0"
                     app:mapValues="0.1 μs:0.0000001|0.2 μs:0.0000002|0.5 μs:0.0000005|1 μs:0.000001|2 μs:0.000002|5 μs:0.000005|10 μs:0.00001|20 μs:0.00002|50 μs:0.00005|0.1 ms:0.0001|0.2 ms:0.0002|0.5 ms:0.0005|1 ms:0.001|2 ms:0.002|5 ms:0.005|10 ms:0.01|20 ms:0.02|50 ms:0.05|100 ms:0.1|200 ms:0.2"
                     app:stepperLabel="Base de temps :" />
 
-                <com.example.pfemobile.ui.StepperInputView
-                    android:id="@+id/volt_stepper_input_view"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/purple_200" />
+
+                <com.example.pfemobile.ui.SwitchView
+                    android:id="@+id/chan1_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginVertical="2.5dp"
+                    android:layout_weight="0"
+                    app:isChecked="true"
+                    app:switchLabel="Canal 1">
+
+                </com.example.pfemobile.ui.SwitchView>
+
+                <com.example.pfemobile.ui.StepperInputView
+                    android:id="@+id/volt_stepper_input_view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2.5dp"
                     android:layout_weight="0"
                     app:mapValues="1 mV:0.001|2 mV:0.002|5 mV:0.005|10 mV:0.01|20 mV:0.02|50 mV:0.05|0.1 V:0.1|0.2 V:0.2|0.5 V:0.5|1 V:1|2 V:2|5 V:5|10 V:10"
-                    app:stepperLabel="Volt/Cell :" >
+                    app:stepperLabel="Volt/Cell :">
 
                 </com.example.pfemobile.ui.StepperInputView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/purple_200" />
+
+
+                <com.example.pfemobile.ui.SwitchView
+                    android:id="@+id/chan2_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2.5dp"
+                    android:layout_weight="0"
+                    app:isChecked="false"
+                    app:switchLabel="Canal 2">
+
+                </com.example.pfemobile.ui.SwitchView>
+
+                <com.example.pfemobile.ui.StepperInputView
+                    android:id="@+id/volt_stepper_input_view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2.5dp"
+                    android:layout_weight="0"
+                    app:mapValues="1 mV:0.001|2 mV:0.002|5 mV:0.005|10 mV:0.01|20 mV:0.02|50 mV:0.05|0.1 V:0.1|0.2 V:0.2|0.5 V:0.5|1 V:1|2 V:2|5 V:5|10 V:10"
+                    app:stepperLabel="Volt/Cell :">
+
+                </com.example.pfemobile.ui.StepperInputView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="6dp"
+                    android:background="@color/purple_200" />
 
                 <Button
                     android:id="@+id/connect_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginVertical="2.5dp"
                     android:text="Connect" />
 
             </LinearLayout>

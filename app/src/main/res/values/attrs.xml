@@ -2,9 +2,16 @@
 <resources>
     <declare-styleable name="FloatInputView">
         <attr name="floatLabel" format="string" />
+        <attr name="minValue" format="float" />
+        <attr name="maxValue" format="float" />
+        <attr name="decimals" format="integer" />
     </declare-styleable>
     <declare-styleable name="StepperInputView">
         <attr name="stepperLabel" format="string" />
         <attr name="mapValues" format="string" />
+    </declare-styleable>
+    <declare-styleable name="SwitchLabelView">
+        <attr name="switchLabel" format="string" />
+        <attr name="isChecked" format="boolean" />
     </declare-styleable>
 </resources>

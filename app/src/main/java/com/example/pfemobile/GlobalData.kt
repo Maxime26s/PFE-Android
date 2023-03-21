@@ -1,6 +1,7 @@
 package com.example.pfemobile
 
 import android.content.Context
+import android.graphics.PointF
 import android.util.Log
 
 object GlobalData {
@@ -29,11 +30,19 @@ object GlobalData {
             }
         }
 
-    var chan1State: Boolean = false
+    var chan1State: Boolean = true
         set(value) {
             if (value != field) {
                 field = value
                 notifyListener("chan1State", value)
+            }
+        }
+
+    var chan1Data: List<PointF> = emptyList()
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("chan1Data", value)
             }
         }
 
@@ -42,6 +51,14 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("chan2State", value)
+            }
+        }
+
+    var chan2Data: List<PointF> = emptyList()
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("chan2Data", value)
             }
         }
 
@@ -54,11 +71,19 @@ object GlobalData {
             }
         }
 
-    var voltPerCell: Float = 0.0f
+    var chan1VoltPerCell: Float = 0.0f
         set(value) {
             if (value != field) {
                 field = value
-                notifyListener("voltPerCell", value)
+                notifyListener("chan1VoltPerCell", value)
+            }
+        }
+
+    var chan2VoltPerCell: Float = 0.0f
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("chan2VoltPerCell", value)
             }
         }
 
@@ -83,6 +108,10 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genState", value)
+                if(value)
+                    write("GEN START")
+                else
+                    write("GEN STOP")
             }
         }
 
@@ -91,6 +120,7 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genAmp", value)
+                write("GEN SET_AMP $value")
             }
         }
 
@@ -99,6 +129,7 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genFreq", value)
+                write("GEN SET_FREQ $value")
             }
         }
 
@@ -107,6 +138,7 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genOffset", value)
+                write("GEN SET_OFFSET $value")
             }
         }
 

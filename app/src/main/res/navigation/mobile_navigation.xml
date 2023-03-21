@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_generator"
-        android:name="com.example.pfemobile.ui.notifications.GeneratorFragment"
+        android:name="com.example.pfemobile.ui.generator.GeneratorFragment"
         android:label="@string/title_generator"
         tools:layout="@layout/fragment_generator" />
 </navigation>

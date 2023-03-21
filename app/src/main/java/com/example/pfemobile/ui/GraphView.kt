@@ -14,7 +14,34 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             field = value
             invalidate()
         }
-    var voltPerCell = 1f
+    var chan1VoltPerCell = 1f
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var chan2VoltPerCell = 1f
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var chan1State: Boolean = true
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var chan2State: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var chan1Data: List<PointF> = emptyList()
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var chan2Data: List<PointF> = emptyList()
         set(value) {
             field = value
             invalidate()
@@ -47,7 +74,8 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
 
         // Set the cell size to the minimum of the width and height to create squares
-        val squareCellSize = PointF(cellSize.x.coerceAtMost(cellSize.y), cellSize.x.coerceAtMost(cellSize.y))
+        val squareCellSize =
+            PointF(cellSize.x.coerceAtMost(cellSize.y), cellSize.x.coerceAtMost(cellSize.y))
 
         // Calculate the total size of the grid
         val gridWidth = squareCellSize.x * gridSize.x
@@ -76,33 +104,69 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
 
         val center = PointF(start.y + gridWidth / 2f, start.y + gridHeight / 2f)
-        val cellValue = PointF(cellSize.x / timePerCell, -cellSize.y / voltPerCell)
+        val chan1CellValue = PointF(cellSize.x / timePerCell, -cellSize.y / chan1VoltPerCell)
+        val chan2CellValue = PointF(cellSize.x / timePerCell, -cellSize.y / chan2VoltPerCell)
 
+        // chan1Data
+        val chan1ScaledPoints = points.map {
+            PointF(
+                it.x * chan1CellValue.x + start.x,
+                it.y * chan1CellValue.y + center.y
+            )
+        }
+        // chan2Data
+        val chan2ScaledPoints = points.map {
+            PointF(
+                it.x * chan2CellValue.x + start.x,
+                it.y * chan2CellValue.y + center.y
+            )
+        }
+
+/*
         // Set up the paint for drawing the points
-        val pointPaint = Paint().apply {
-            color = Color.BLUE
+        val chan1PointPaint = Paint().apply {
+            color = Color.YELLOW
+            style = Paint.Style.FILL
+        }
+        val chan2PointPaint = Paint().apply {
+            color = Color.RED
             style = Paint.Style.FILL
         }
 
-        val scaledPoints = points.map { PointF(it.x * cellValue.x + start.x, it.y * cellValue.y + center.y) }
-
         // Draw each point on the canvas
-        for (scaledPoint in scaledPoints) {
-            canvas.drawCircle(scaledPoint.x, scaledPoint.y, 10f, pointPaint)
+        for (scaledPoint in chan1ScaledPoints) {
+            canvas.drawCircle(scaledPoint.x, scaledPoint.y, 10f, chan1PointPaint)
         }
-
+        for (scaledPoint in chan2ScaledPoints) {
+            canvas.drawCircle(scaledPoint.x, scaledPoint.y, 10f, chan2PointPaint)
+        }
+*/
         // Set up the paint for drawing the line
-        val linePaint = Paint().apply {
+        val chan1LinePaint = Paint().apply {
+            color = Color.YELLOW
+            style = Paint.Style.STROKE
+            strokeWidth = 5f
+        }
+        val chan2LinePaint = Paint().apply {
             color = Color.RED
             style = Paint.Style.STROKE
             strokeWidth = 5f
         }
 
         // Draw the lines between each point
-        for (i in 0 until scaledPoints.size - 1) {
-            val start = scaledPoints[i]
-            val end = scaledPoints[i + 1]
-            canvas.drawLine(start.x, start.y, end.x, end.y, linePaint)
+        if(chan1State){
+            for (i in 0 until chan1ScaledPoints.size - 1) {
+                val start = chan1ScaledPoints[i]
+                val end = chan1ScaledPoints[i + 1]
+                canvas.drawLine(start.x, start.y, end.x, end.y, chan1LinePaint)
+            }
+        }
+        if(chan2State){
+            for (i in 0 until chan2ScaledPoints.size - 1) {
+                val start = chan2ScaledPoints[i]
+                val end = chan2ScaledPoints[i + 1]
+                canvas.drawLine(start.x, start.y, end.x, end.y, chan2LinePaint)
+            }
         }
     }
 

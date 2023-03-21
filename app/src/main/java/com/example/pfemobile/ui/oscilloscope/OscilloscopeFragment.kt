@@ -1,5 +1,6 @@
 package com.example.pfemobile.ui.oscilloscope
 
+import android.graphics.PointF
 import android.os.Bundle
 import android.provider.Settings.Global
 import android.view.LayoutInflater
@@ -30,35 +31,73 @@ class OscilloscopeFragment : Fragment() {
         _binding = FragmentOscilloscopeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.timeStepperInputView.setOnValueChangedListener { value -> GlobalData.timePerCell = value }
-        binding.voltStepperInputView.setOnValueChangedListener { value -> GlobalData.voltPerCell = value }
+        binding.timeStepperInputView.setOnValueChangedListener { value ->
+            GlobalData.timePerCell = value
+        }
+        binding.voltStepperInputView1.setOnValueChangedListener { value ->
+            GlobalData.chan1VoltPerCell = value
+        }
+        binding.voltStepperInputView2.setOnValueChangedListener { value ->
+            GlobalData.chan2VoltPerCell = value
+        }
+
+        binding.chan1Switch.setOnCheckedChangeListener { _, value ->
+            GlobalData.chan1State = value
+        }
+        binding.chan2Switch.setOnCheckedChangeListener { _, value ->
+            GlobalData.chan2State = value
+        }
 
         GlobalData.addListener("timePerCell") { value: Any ->
             binding.graphView.timePerCell = value as Float
             binding.timeStepperInputView.setIndexFromValue(value)
         }
-        GlobalData.addListener("voltPerCell") { value: Any ->
-            binding.graphView.voltPerCell = value as Float
-            binding.voltStepperInputView.setIndexFromValue(value)
+        GlobalData.addListener("chan1VoltPerCell") { value: Any ->
+            binding.graphView.chan1VoltPerCell = value as Float
+            binding.voltStepperInputView1.setIndexFromValue(value)
+        }
+        GlobalData.addListener("chan2VoltPerCell") { value: Any ->
+            binding.graphView.chan2VoltPerCell = value as Float
+            binding.voltStepperInputView2.setIndexFromValue(value)
+        }
+        GlobalData.addListener("chan1State") { value: Any ->
+            binding.graphView.chan1State = value as Boolean
+            binding.chan1Switch.isChecked = value
+        }
+        GlobalData.addListener("chan2State") { value: Any ->
+            binding.graphView.chan2State = value as Boolean
+            binding.chan2Switch.isChecked = value
         }
 
         GlobalData.addListener("bleConnected") { value: Any ->
-            if(value as Boolean)
+            if (value as Boolean)
                 binding.connectButton.text = "Disconnect"
             else
                 binding.connectButton.text = "Connect"
         }
+        GlobalData.addListener("chan1Data") { value: Any ->
+            binding.graphView.chan1Data = value as List<PointF>
+            binding.graphView.invalidate()
+        }
+        GlobalData.addListener("chan2Data") { value: Any ->
+            binding.graphView.chan2Data = value as List<PointF>
+            binding.graphView.invalidate()
+        }
+
+        binding.graphView.invalidate()
 
         binding.timeStepperInputView.setIndexFromValue(0.1f)
-        binding.voltStepperInputView.setIndexFromValue(1f)
+        binding.voltStepperInputView1.setIndexFromValue(1f)
+        binding.voltStepperInputView2.setIndexFromValue(1f)
+        binding.chan1Switch.isChecked = true
+        binding.chan2Switch.isChecked = false
 
-        binding.connectButton.setOnClickListener{
-            if(!GlobalData.bleCommunicator.isScanning()){
-                if(GlobalData.bleCommunicator.isConnected()){
+        binding.connectButton.setOnClickListener {
+            if (!GlobalData.bleCommunicator.isScanning()) {
+                if (GlobalData.bleCommunicator.isConnected()) {
                     GlobalData.bleCommunicator.disconnect()
                     Toast.makeText(context, "Disconnecting...", Toast.LENGTH_SHORT).show()
-                }
-                else{
+                } else {
                     GlobalData.bleCommunicator.startScan()
                     Toast.makeText(context, "Scanning...", Toast.LENGTH_SHORT).show()
                 }

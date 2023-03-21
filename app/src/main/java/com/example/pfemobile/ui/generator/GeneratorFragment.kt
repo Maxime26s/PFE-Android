@@ -1,4 +1,4 @@
-package com.example.pfemobile.ui.notifications
+package com.example.pfemobile.ui.generator
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,10 +28,8 @@ class GeneratorFragment : Fragment() {
         _binding = FragmentGeneratorBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        generatorViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
+
         return root
     }
 
