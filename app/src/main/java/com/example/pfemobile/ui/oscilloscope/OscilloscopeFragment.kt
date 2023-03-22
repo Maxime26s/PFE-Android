@@ -84,6 +84,11 @@ class OscilloscopeFragment : Fragment() {
             binding.graphView.invalidate()
         }
 
+        if (GlobalData.bleConnected)
+            binding.connectButton.text = "Déconnexion"
+        else
+            binding.connectButton.text = "Connexion"
+
         binding.graphView.invalidate()
 
         binding.timeStepperInputView.setIndexFromValue(0.1f)

@@ -184,15 +184,8 @@ object GlobalData {
     }
 
     fun write(message: String) {
-        if (::bleCommunicator.isInitialized){
-            val chunked = message.chunked(20)
-            Log.v("test", chunked.toString())
-            for(chunk in chunked){
-                Log.v("test", chunk)
-                bleCommunicator.write(chunk)
-                Thread.sleep(50)
-            }
-
+        if (::bleCommunicator.isInitialized) {
+            bleCommunicator.write(message)
         }
     }
 }

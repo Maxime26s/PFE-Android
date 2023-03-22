@@ -110,16 +110,65 @@ class BleCommunicator(private val context: Context, private val onMessageReceive
                     }
                 }
 
+                /*
                 override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
                     if (characteristic.uuid == characteristicUUID) {
                         onMessageReceived(characteristic.getStringValue(0))
                     }
                 }
+                */
+
+                private val messageDelimiter = "|"
+
+                private var receivedMessageBuffer = StringBuilder()
+
+                override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+                    if (characteristic.uuid == characteristicUUID) {
+                        val chunk = characteristic.getStringValue(0)
+
+                        if (chunk.endsWith(messageDelimiter)) {
+                            receivedMessageBuffer.append(chunk.removeSuffix(messageDelimiter))
+                            onMessageReceived(receivedMessageBuffer.toString())
+                            receivedMessageBuffer.clear()
+                        } else {
+                            receivedMessageBuffer.append(chunk)
+                        }
+                    }
+                }
+
             })
 
         GlobalData.bleConnected = true
     }
 
+    private val maxChunkSize = 20
+    private val messageDelimiter = "|"
+
+    fun write(message: String) {
+        val chunks = message.chunked(maxChunkSize)
+        chunks.forEachIndexed { index, chunk ->
+            val chunkWithDelimiter = if (index == chunks.size - 1) "$chunk$messageDelimiter" else chunk
+            writeChunk(chunkWithDelimiter)
+            // Optional: Add a delay between chunks to avoid overwhelming the receiver
+            Thread.sleep(50)
+        }
+    }
+
+
+    private fun writeChunk(chunk: String) {
+        bluetoothGatt?.getService(serviceUUID)?.getCharacteristic(characteristicUUID)?.let { characteristic ->
+            characteristic.setValue(chunk)
+            bluetoothGatt?.writeCharacteristic(characteristic)
+        }
+    }
+
+    fun read() {
+        bluetoothGatt?.getService(serviceUUID)?.getCharacteristic(characteristicUUID)?.let { characteristic ->
+            bluetoothGatt?.readCharacteristic(characteristic)
+        }
+    }
+
+/*
     fun write(message: String) {
         bluetoothGatt?.getService(serviceUUID)?.getCharacteristic(characteristicUUID)?.let { characteristic ->
             characteristic.setValue(message)
@@ -132,6 +181,7 @@ class BleCommunicator(private val context: Context, private val onMessageReceive
             bluetoothGatt?.readCharacteristic(characteristic)
         }
     }
+ */
 
     fun disconnect() {
         bluetoothGatt?.disconnect()
