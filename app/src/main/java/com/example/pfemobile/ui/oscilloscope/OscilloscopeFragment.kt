@@ -71,9 +71,9 @@ class OscilloscopeFragment : Fragment() {
 
         GlobalData.addListener("bleConnected") { value: Any ->
             if (value as Boolean)
-                binding.connectButton.text = "Disconnect"
+                binding.connectButton.text = "Déconnexion"
             else
-                binding.connectButton.text = "Connect"
+                binding.connectButton.text = "Connexion"
         }
         GlobalData.addListener("chan1Data") { value: Any ->
             binding.graphView.chan1Data = value as List<PointF>

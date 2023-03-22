@@ -1,12 +1,16 @@
 package com.example.pfemobile.ui.generator
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.pfemobile.GlobalData
 import com.example.pfemobile.databinding.FragmentGeneratorBinding
 
 class GeneratorFragment : Fragment() {
@@ -28,7 +32,27 @@ class GeneratorFragment : Fragment() {
         _binding = FragmentGeneratorBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.genUpdateButton.setOnClickListener {
+            if(!GlobalData.bleConnected)
+            {
+                Toast.makeText(context, "Aucune connexion Bluetooth", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
+            val amp = binding.ampInput.getFloatValue()
+            val freq = binding.freqInput.getFloatValue()
+            val offset = binding.freqInput.getFloatValue()
+            val type = if(binding.typeGroup.checkedChipId == binding.sinusoidalChip.id) "SINE" else "PULSE"
+            val rise = binding.riseInput.getFloatValue()
+            val high = binding.riseInput.getFloatValue()
+            val fall = binding.riseInput.getFloatValue()
+
+            val message = "GEN NEW_WAVE $amp $freq $offset $type $rise $high $fall"
+
+            Log.v("Gen", message)
+
+            GlobalData.write(message)
+        }
 
         return root
     }

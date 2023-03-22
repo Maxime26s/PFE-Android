@@ -108,7 +108,7 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genState", value)
-                if(value)
+                if (value)
                     write("GEN START")
                 else
                     write("GEN STOP")
@@ -120,7 +120,6 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genAmp", value)
-                write("GEN SET_AMP $value")
             }
         }
 
@@ -129,7 +128,6 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genFreq", value)
-                write("GEN SET_FREQ $value")
             }
         }
 
@@ -138,7 +136,38 @@ object GlobalData {
             if (value != field) {
                 field = value
                 notifyListener("genOffset", value)
-                write("GEN SET_OFFSET $value")
+            }
+        }
+
+    var genType: String = "sin"
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("genType", value)
+            }
+        }
+
+    var genRise: Float = 0.0f
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("genRise", value)
+            }
+        }
+
+    var genHigh: Float = 0.0f
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("genHigh", value)
+            }
+        }
+
+    var genFall: Float = 0.0f
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyListener("genFall", value)
             }
         }
 
@@ -154,8 +183,16 @@ object GlobalData {
         listeners[key]?.invoke(value)
     }
 
-    private fun write(message: String){
-        if(::bleCommunicator.isInitialized)
-            bleCommunicator.write(message)
+    fun write(message: String) {
+        if (::bleCommunicator.isInitialized){
+            val chunked = message.chunked(20)
+            Log.v("test", chunked.toString())
+            for(chunk in chunked){
+                Log.v("test", chunk)
+                bleCommunicator.write(chunk)
+                Thread.sleep(50)
+            }
+
+        }
     }
 }
