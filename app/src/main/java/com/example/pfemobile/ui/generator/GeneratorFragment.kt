@@ -47,7 +47,7 @@ class GeneratorFragment : Fragment() {
             val high = binding.riseInput.getFloatValue()
             val fall = binding.riseInput.getFloatValue()
 
-            val message = "ECHO GEN NEW_WAVE $amp $freq $offset $type $rise $high $fall"
+            val message = "GEN NEW_WAVE $amp $freq $offset $type $rise $high $fall"
 
             Log.v("Gen", message)
 
