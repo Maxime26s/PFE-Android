@@ -41,7 +41,7 @@ class GeneratorFragment : Fragment() {
 
             val amp = binding.ampInput.getFloatValue()
             val freq = binding.freqInput.getFloatValue()
-            val offset = binding.freqInput.getFloatValue()
+            val offset = binding.offsetInput.getFloatValue()
             val type = if(binding.typeGroup.checkedChipId == binding.sinusoidalChip.id) "SINE" else "PULSE"
             val rise = binding.riseInput.getFloatValue()
             val high = binding.riseInput.getFloatValue()

@@ -70,6 +70,8 @@ class OscilloscopeFragment : Fragment() {
         }
 
         GlobalData.addListener("bleConnected") { value: Any ->
+            if (_binding == null) return@addListener
+
             if (value as Boolean)
                 binding.connectButton.text = "Déconnexion"
             else
@@ -107,6 +109,8 @@ class OscilloscopeFragment : Fragment() {
                     Toast.makeText(context, "Scanning...", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            if (_binding == null) return@setOnClickListener
         }
 
         return root
