@@ -6,27 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".ui.source.SourceFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="199dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <com.example.pfemobile.ui.FloatInputView
+                android:id="@+id/source_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="2.5dp"
+                app:decimals="1"
+                app:floatLabel="Voltage (V)"
+                app:maxValue="18.6"
+                app:minValue="1.9" />
+
+            <Button
+                android:id="@+id/source_update_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mettre à jour" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

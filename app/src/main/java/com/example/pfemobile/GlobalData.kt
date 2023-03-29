@@ -87,15 +87,7 @@ object GlobalData {
             }
         }
 
-    var sourceState: Boolean = false
-        set(value) {
-            if (value != field) {
-                field = value
-                notifyListener("sourceState", value)
-            }
-        }
-
-    var sourceVoltage: Float = 0.0f
+    var sourceVoltage: Float = 5.0f
         set(value) {
             if (value != field) {
                 field = value
@@ -115,7 +107,7 @@ object GlobalData {
             }
         }
 
-    var genAmp: Float = 0.0f
+    var genAmp: Float = 0.2f
         set(value) {
             if (value != field) {
                 field = value
@@ -123,15 +115,16 @@ object GlobalData {
             }
         }
 
-    var genFreq: Float = 0.0f
+    var genFreq: Float = 1000.0f
         set(value) {
             if (value != field) {
                 field = value
                 notifyListener("genFreq", value)
+                Log.v("wtf", value.toString())
             }
         }
 
-    var genOffset: Float = 0.0f
+    var genOffset: Float = 0.5f
         set(value) {
             if (value != field) {
                 field = value

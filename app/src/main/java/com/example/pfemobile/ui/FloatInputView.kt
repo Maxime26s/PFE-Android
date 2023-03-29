@@ -70,7 +70,11 @@ class FloatInputView @JvmOverloads constructor(
     }
 
     fun getFloatValue(): Float {
-        return floatInputEditText.text.toString().toFloat()
+        return try{
+            floatInputEditText.text.toString().toFloat()
+        } catch (e : Exception){
+            1f;
+        }
     }
 
     fun setOnValueChangedListener(listener: (value: Float) -> Unit) {
