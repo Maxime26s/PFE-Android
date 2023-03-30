@@ -2,7 +2,9 @@ package com.example.pfemobile.ui.oscilloscope
 
 import android.graphics.PointF
 import android.os.Bundle
-import android.provider.Settings.Global
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,5 +121,42 @@ class OscilloscopeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = object : Runnable {
+        override fun run() {
+            // Call your function here
+            requestCapture()
+
+            // Call this runnable again after 3 seconds
+            handler.postDelayed(this, 2500)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Start the runnable when the fragment is resumed
+        handler.post(runnable)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // Stop the runnable when the fragment is paused
+        handler.removeCallbacks(runnable)
+    }
+
+    private fun requestCapture() {
+        if(!binding.graphView.chan1State && !binding.graphView.chan2State)
+            return;
+        // Do whatever you want to do every 3 seconds
+        val timePerCell = binding.graphView.timePerCell;
+        val message = "OSC CAPTURE $timePerCell"
+
+        Log.v("Osc", message)
+
+        GlobalData.write(message)
     }
 }
