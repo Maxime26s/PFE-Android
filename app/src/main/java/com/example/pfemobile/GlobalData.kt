@@ -18,6 +18,18 @@ object GlobalData {
             onMessageReceived = { message ->
                 // Handle the received message
                 Log.d(TAG, "Message received: $message")
+
+                if(message[0] == '['){
+                    val arr = stringToArray(message)
+
+                    val newArr1 = mutableListOf<Int>()
+                    val newArr2 = mutableListOf<Int>()
+
+                    for(i in arr.indices){
+                        if(i%2 == 0) newArr1.add(arr[i])
+                        else newArr2.add(arr[i])
+                    }
+                }
             }
         )
     }
@@ -181,4 +193,15 @@ object GlobalData {
             bleCommunicator.write(message)
         }
     }
+
+    fun stringToArray(input: String): IntArray {
+        // Remove the square brackets and split the string into individual numbers
+        val numbers = input.substring(1, input.length - 1).split(",")
+
+        // Convert each string number into an integer and add it to a new array
+        val output = IntArray(numbers.size) { index -> numbers[index].toInt() }
+
+        return output
+    }
+
 }
