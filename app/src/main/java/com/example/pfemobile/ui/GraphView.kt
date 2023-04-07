@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -39,11 +40,13 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var chan1Data: List<PointF> = emptyList()
         set(value) {
             field = value
+            Log.v("chan1 val", field.toString())
             invalidate()
         }
     var chan2Data: List<PointF> = emptyList()
         set(value) {
             field = value
+            Log.v("chan2 val", field.toString())
             invalidate()
         }
 
@@ -108,14 +111,14 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val chan2CellValue = PointF(cellSize.x / timePerCell, -cellSize.y / chan2VoltPerCell)
 
         // chan1Data
-        val chan1ScaledPoints = points.map {
+        val chan1ScaledPoints = chan1Data.map {
             PointF(
                 it.x * chan1CellValue.x + start.x,
                 it.y * chan1CellValue.y + center.y
             )
         }
         // chan2Data
-        val chan2ScaledPoints = points.map {
+        val chan2ScaledPoints = chan2Data.map {
             PointF(
                 it.x * chan2CellValue.x + start.x,
                 it.y * chan2CellValue.y + center.y

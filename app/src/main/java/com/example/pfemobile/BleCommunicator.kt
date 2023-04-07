@@ -141,7 +141,7 @@ class BleCommunicator(private val context: Context, private val onMessageReceive
         GlobalData.bleConnected = true
     }
 
-    private val maxChunkSize = 20
+    private val maxChunkSize = 19
     private val messageDelimiter = "|"
 
     fun write(message: String) {

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.pfemobile.GlobalData
+import com.example.pfemobile.GlobalData.chan2State
 import com.example.pfemobile.databinding.FragmentOscilloscopeBinding
 
 class OscilloscopeFragment : Fragment() {
@@ -70,6 +71,12 @@ class OscilloscopeFragment : Fragment() {
             binding.graphView.chan2State = value as Boolean
             binding.chan2Switch.isChecked = value
         }
+        GlobalData.addListener("chan1Data") { value: Any ->
+            binding.graphView.chan1Data = value as List<PointF>
+        }
+        GlobalData.addListener("chan2Data") { value: Any ->
+            binding.graphView.chan2Data = value as List<PointF>
+        }
 
         GlobalData.addListener("bleConnected") { value: Any ->
             if (_binding == null) return@addListener
@@ -101,6 +108,8 @@ class OscilloscopeFragment : Fragment() {
         binding.chan1Switch.isChecked = true
         binding.chan2Switch.isChecked = false
 
+        binding.captureButton.setOnClickListener { requestCapture() }
+
         binding.connectButton.setOnClickListener {
             if (!GlobalData.bleCommunicator.isScanning()) {
                 if (GlobalData.bleCommunicator.isConnected()) {
@@ -127,10 +136,10 @@ class OscilloscopeFragment : Fragment() {
     private val runnable = object : Runnable {
         override fun run() {
             // Call your function here
-            requestCapture()
+            //requestCapture()
 
             // Call this runnable again after 3 seconds
-            handler.postDelayed(this, 2500)
+            //handler.postDelayed(this, 2500)
         }
     }
 
@@ -151,9 +160,12 @@ class OscilloscopeFragment : Fragment() {
     private fun requestCapture() {
         if(!binding.graphView.chan1State && !binding.graphView.chan2State)
             return;
-        // Do whatever you want to do every 3 seconds
-        val timePerCell = binding.graphView.timePerCell;
-        val message = "OSC CAPTURE $timePerCell"
+
+        val timePerCellUs = binding.graphView.timePerCell * 1000000;
+        val timePerCellInt = timePerCellUs.toInt()
+        val chan2StateValue = if(chan2State) "2" else "1";
+
+        val message = "OSC CAPTURE $chan2StateValue $timePerCellInt"
 
         Log.v("Osc", message)
 

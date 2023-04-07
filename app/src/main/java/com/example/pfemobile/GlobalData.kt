@@ -19,15 +19,35 @@ object GlobalData {
                 // Handle the received message
                 Log.d(TAG, "Message received: $message")
 
-                if(message[0] == '['){
+                if(message.startsWith("array('H', [")){
                     val arr = stringToArray(message)
+                    Log.v("fdsafds", timePerCell.toString())
+                    val xunit = timePerCell*12 / arr.size;
 
-                    val newArr1 = mutableListOf<Int>()
-                    val newArr2 = mutableListOf<Int>()
+                    if(!chan2State){
+                        val newArr1 = mutableListOf<PointF>()
 
-                    for(i in arr.indices){
-                        if(i%2 == 0) newArr1.add(arr[i])
-                        else newArr2.add(arr[i])
+                        for(i in arr.indices){
+                            val x = xunit * i
+                            val y = (arr[i] - 2048f) / 2048f * 15f
+                            newArr1.add(PointF(x,y))
+                        }
+
+                        chan1Data = newArr1
+                    }
+                    else{
+                        val newArr1 = mutableListOf<PointF>()
+                        val newArr2 = mutableListOf<PointF>()
+
+                        for(i in arr.indices){
+                            val x = xunit * (i/2) * 2f
+                            val y = (arr[i] - 2048f) / 2048f * 15f
+                            if(i%2 == 0) newArr1.add(PointF(x,y))
+                            else newArr2.add(PointF(x,y))
+                        }
+
+                        chan1Data = newArr1
+                        chan2Data = newArr2
                     }
                 }
             }
@@ -194,9 +214,13 @@ object GlobalData {
         }
     }
 
-    fun stringToArray(input: String): IntArray {
+    private fun stringToArray(input: String): IntArray {
+        val parsedArray = input.substring(11, input.length-1)
+
+        Log.v("dsa", parsedArray)
+
         // Remove the square brackets and split the string into individual numbers
-        val numbers = input.substring(1, input.length - 1).split(",")
+        val numbers = parsedArray.substring(1, parsedArray.length-1).split(", ")
 
         // Convert each string number into an integer and add it to a new array
         val output = IntArray(numbers.size) { index -> numbers[index].toInt() }
