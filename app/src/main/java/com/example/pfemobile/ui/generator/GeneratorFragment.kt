@@ -64,8 +64,8 @@ class GeneratorFragment : Fragment() {
             val offset = binding.offsetInput.getFloatValue()
             val type = if(binding.typeGroup.checkedChipId == binding.sinusoidalChip.id) "SINE" else "PULSE"
             val rise = binding.riseInput.getFloatValue()/100f
-            val high = binding.riseInput.getFloatValue()/100f
-            val fall = binding.riseInput.getFloatValue()/100f
+            val high = binding.highInput.getFloatValue()/100f
+            val fall = binding.fallInput.getFloatValue()/100f
 
             val message = "GEN NEW_WAVE $amp $freq $offset $type $rise $high $fall"
 

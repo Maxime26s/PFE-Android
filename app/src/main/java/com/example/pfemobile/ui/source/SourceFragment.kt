@@ -59,7 +59,12 @@ class SourceFragment : Fragment() {
 
             val voltage = binding.sourceInput.getFloatValue()
             val rebasedVoltage = convertValueToRange(voltage)
-            val message = "SRC SET_VOLTAGE $rebasedVoltage"
+            Log.v("Source", rebasedVoltage.toString())
+            var hexValue = rebasedVoltage.toString(16).uppercase()
+            if(hexValue.length == 1)
+                hexValue = "0$hexValue"
+            Log.v("Source", hexValue)
+            val message = "SRC SET_VOLTAGE $hexValue"
 
             Log.v("Source", message)
 
@@ -93,11 +98,11 @@ class SourceFragment : Fragment() {
         }
     }
 
-    fun convertValueToRange(value: Float): Int {
-        val min = 1.9f
-        val max = 18.6f
+    private fun convertValueToRange(value: Float): Int {
+        val min = 1.71f
+        val max = 17.8f
         val range = max - min
-        val scaledValue = (value - min) / range
-        return (scaledValue * 255).toInt()
+        val scaledValue = ((value - min) / range).coerceIn(0.0f,1.0f)
+        return (scaledValue * 79).toInt()
     }
 }

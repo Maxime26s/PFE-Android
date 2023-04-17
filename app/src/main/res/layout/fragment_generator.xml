@@ -188,13 +188,13 @@
                             android:id="@+id/square_chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dent de scie" />
+                            android:text="Carrée" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/sawtooth_chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Carrée" />
+                            android:text="Dent de scie" />
                     </com.google.android.material.chip.ChipGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
